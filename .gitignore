@@ -1,0 +1,14 @@
+.env
+
+__pycache__/
+
+venv/
+
+.breakpoints
+
+#poetry
+pyproject.toml
+
+# replit
+.replit
+.upm/
