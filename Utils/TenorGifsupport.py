@@ -1,7 +1,8 @@
 import requests 
 import os 
+import dotenv
 
-
+dotenv.load_dotenv()
 tenor_key = os.environ['Tenor_api_key']
 
 def getGif(term :str) -> str:

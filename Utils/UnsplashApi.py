@@ -1,9 +1,10 @@
 import requests
-
 import os
+import dotenv
 
 
-Unsplash_key = os.getenv("Unsplash_access_key")
+dotenv.load_dotenv()
+Unsplash_key = os.environ["Unsplash_access_key"]
 
 def RandomImage(term):
   url="https://api.unsplash.com/photos/random"
