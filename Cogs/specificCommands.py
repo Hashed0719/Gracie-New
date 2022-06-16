@@ -2,37 +2,37 @@ import disnake
 
 import datetime
 
-from disnake.commands import core 
+from disnake.ext.commands import slash_command
 from disnake.ext import commands
-from disnake import InputTextStyle, ui
+from disnake import TextInputStyle, ui
 
 from Assets import constants
 
 
 
 class confess_modal(ui.Modal):
-    def __init__(self, bot: disnake.Bot):
-        super().__init__(title="Confess")
+    def __init__(self, bot: commands.Bot):
+        super().__init__(
+            title = "Confess",
+            components = [
+                ui.TextInput(
+                        style=TextInputStyle.short,
+                        label="Name",
+                        required=False,
+                        placeholder='Leave Empty if "Anonymous" confession',
+                        custom_id="name"
+                        ),
+                ui.TextInput(
+                        style=TextInputStyle.long,
+                        label="Your Confession",
+                        placeholder="Your confession may be completely anonymous but you could still be banned for breaking server laws.",
+                        custom_id="confession"
+                        )
+                ]
+        )
         self.bot = bot
 
-        self.add_item(
-            ui.InputText(
-            style=InputTextStyle.short,
-            label="Name",
-            required=False,
-            placeholder='Leave Empty if "Anonymous" confession',
-            )
-        )
-        
-        self.add_item(
-            ui.InputText(
-            style=InputTextStyle.long,
-            label="Your Confession",
-            placeholder="Your confession may be completely anonymous but you could still be banned for breaking server laws."
-            )
-        )
-
-    async def callback(self, interaction :disnake.Interaction):
+    async def callback(self, interaction :disnake.ModalInteraction):
         author = interaction.user
         with open("Assets/Bans/confessban.txt") as file:
             list = file.readlines()
@@ -40,18 +40,17 @@ class confess_modal(ui.Modal):
         if author.id in ban_list:
             msg = "Looks like you are banned from using this command!"
             await interaction.response.send_message(msg, delete_after=5)
-            self.stop()
             return
             
         await interaction.response.send_message("Thanks for your confession!", ephemeral=True)
 
-        if not self.children[0].value:
+        if not interaction.text_values["name"]:
             name = ""
             embed_title = "Anonymous Confession" 
         else:
-            name = self.children[0].value.strip()
+            name = interaction.text_values["name"].strip()
             embed_title = f"{name}'s Confession" 
-        confession_description = self.children[1].value
+        confession_description = interaction.text_values["confession"]
 
     #sending confession in confess channel
         embed = disnake.Embed(
@@ -80,8 +79,7 @@ class confess_modal(ui.Modal):
         audit_id = constants.channel_id.audit
         audit_channel = self.bot.get_channel(audit_id)
         await audit_channel.send(embed=embed)
-    
-        self.stop()    
+       
 
 
 class special_commands(commands.Cog):
@@ -105,16 +103,19 @@ class special_commands(commands.Cog):
                 
         modal = confess_modal(self.bot)
         view = MyView(modal=modal)
-        sent_button = await ctx.send(".", view=view)
-        await modal.wait()
-        await sent_button.delete()
+        await ctx.send(".", view=view)
 
-    @core.slash_command(name="confess")
+    @commands.Cog.listener()
+    async def on_modal_submit(self, inter: disnake.ModalInteraction):
+        if inter.message:
+            await inter.message.delete()
+
+    @slash_command(name="confess")
     @commands.cooldown(1, 30, commands.BucketType.user)
-    async def confess_slash(self, ctx :disnake.ApplicationContext):
+    async def confess_slash(self, inter):
         """Confess to your heart's content '-'"""
         modal = confess_modal(self.bot)
-        await ctx.send_modal(modal)
+        await inter.response.send_modal(modal)
     
     @confess.error
     async def local_handler(self, ctx, error):
@@ -123,8 +124,6 @@ class special_commands(commands.Cog):
     @confess_slash.error
     async def local_handler(self, ctx, error):
         await ctx.respond(str(error))  
-
-
 
 def setup(bot):
     bot.add_cog(special_commands(bot))

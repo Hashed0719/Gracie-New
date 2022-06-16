@@ -61,11 +61,10 @@ extensions = [
     "Cogs._initManager",
     "Cogs.eventListeners",
     "Cogs.helpCommand",
-    # "Cogs.imagesAndGifs",
-    # "Cogs.slashCommands",
-    # "Cogs.gracieCommands",
-    # "Cogs.specificCommands"
-    "Cogs.test"
+    "Cogs.imagesAndGifs",
+    "Cogs.slashCommands",
+    "Cogs.gracieCommands",
+    "Cogs.specificCommands"
 ]
 
 [bot.load_extension(ext) for ext in extensions]

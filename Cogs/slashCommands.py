@@ -4,14 +4,17 @@ import random, datetime
 
 from disnake import Embed
 from disnake.ext import commands
-from disnake.commands.core import slash_command
+from disnake.ext.commands import slash_command
 
 from Assets import constants
-
+from Assets.constants import social_links
 # from dislash import slash_command,Option,OptionType
 
 from Utils.TenorGifsupport import getGif
 from Utils.SomeFunctions import get_list
+
+import logging as log
+
 
 class slashcommands(commands.Cog):
     def __init__(self, bot):
@@ -86,91 +89,111 @@ class slashcommands(commands.Cog):
   #   embed = Embed(title=f"{ctx.author} hugged {user}")
   #   embed.set_image(url=gif_link)
   #   await ctx.send(embed=embed)
-
+        
     @slash_command()
-    async def lyric(self, ctx):
+    async def lyric(self, inter):
+        """Sends random lyrics from gracie's songs."""
         gracie_lyrics = get_list("Gracie_Lyrics")
-        await ctx.respond(random.choice(gracie_lyrics))
+        await inter.response.send_message(random.choice(gracie_lyrics))
 
     @slash_command()
-    async def startchain(self, ctx):
+    async def startchain(self, inter):
+        """Starts a new lyric chain!"""
         gracie_chain = get_list("Gracie_Chain")
-        await ctx.respond(random.choice(gracie_chain))
+        await inter.response.send_message(random.choice(gracie_chain))
 
     @slash_command()
-    async def finishthelyric(self, ctx):
+    async def finishthelyric(self, inter):
+        """A fun game of finishing a lyric by gracie! """
         gracie_finishthelyric = get_list("Gracie_FinishTheLyric")
-        await ctx.respond(random.choice(gracie_finishthelyric))
+        await inter.response.send_message(random.choice(gracie_finishthelyric))
   
     @slash_command()
-    async def intro(self, ctx):
-        await ctx.respond('https://open.spotify.com/playlist/51TIRdARgx0ewyPr1PbuoX?si=ognPOCNBSLaWymms1Jc6SQ')
+    async def intro(self, inter):
+        """Sends intro playlist."""
+        await inter.response.send_message('https://open.spotify.com/playlist/51TIRdARgx0ewyPr1PbuoX?si=ognPOCNBSLaWymms1Jc6SQ')
 
     @slash_command()
-    async def instagram(self, ctx):
-        await ctx.respond('https://www.instagram.com/gracieabrams')
+    async def instagram(self, inter):
+        """Sends link to gracie's Instagram handle."""
+        await inter.response.send_message('https://www.instagram.com/gracieabrams')
 
     @slash_command()
-    async def discography(self, ctx):
-        await ctx.respond('https://open.spotify.com/playlist/37i9dQZF1DZ06evO2Cuzya?si=2c5234fcad9544e5')
+    async def discography(self, inter):
+        """Sends gracie's discography."""
+        await inter.response.send_message('https://open.spotify.com/playlist/37i9dQZF1DZ06evO2Cuzya?si=2c5234fcad9544e5')
 
   
     @slash_command()
-    async def playlist(self, ctx):
-        await ctx.respond('https://open.spotify.com/playlist/7Mven07omZONK1nS8o9oEo?si=3cba33f71db04ccc')
+    async def playlist(self, inter):
+        """Sends Gracie's songs playlist."""
+        await inter.response.send_message('https://open.spotify.com/playlist/7Mven07omZONK1nS8o9oEo?si=3cba33f71db04ccc')
 
     @slash_command()
-    async def mv(self, ctx):
+    async def mv(self, inter):
+        """Gets a random music video link."""
         gracie_mvs = get_list("Gracie_Mvs")
-        await ctx.respond(random.choice(gracie_mvs))
+        await inter.response.send_message(random.choice(gracie_mvs))
 
     @slash_command()
-    async def unreleased(self, ctx):
+    async def unreleased(self, inter):
+        """Sends a link to one of gracie's unreleased songs."""
         gracie_unreleased = get_list("Gracie_Unreleased")
-        await ctx.respond(random.choice(gracie_unreleased))
+        await inter.response.send_message(random.choice(gracie_unreleased))
 
     @slash_command()
-    async def track(self, ctx):
+    async def track(self, inter):
         """sends a random track"""
         gracie_tracks = get_list("Gracie_Tracks")
-        await ctx.respond(random.choice(gracie_tracks))
+        await inter.response.send_message(random.choice(gracie_tracks))
 
     @slash_command()
-    async def project(self, ctx):
+    async def project(self, inter):
+        """Sends a random gracie project."""
         gracie_projects = get_list("Gracie_Projects")
-        await ctx.respond(random.choice(gracie_projects))
+        await inter.response.send_message(random.choice(gracie_projects))
 
     @slash_command()
-    async def fact(self, ctx):
+    async def fact(self, inter):
+        """Tells a fact about gracie."""
         gracie_fact = get_list("Gracie_Fact")
         embed = disnake.Embed(color=0x2f3136)
         embed.set_image(url=random.choice(gracie_fact))
-        await ctx.respond(embed=embed)
+        await inter.response.send_message(embed=embed)
 
     @slash_command()
-    async def cover(self, ctx):
+    async def cover(self, inter):
+        """Sends covers."""
         gracie_covers = get_list("Gracie_Covers")
         embed = disnake.Embed(color=0x2f3136)
         embed.set_image(url=random.choice(gracie_covers))
-        await ctx.respond(embed=embed)
+        await inter.response.send_message(embed=embed)
 
     @slash_command()
-    async def taste(self, ctx):
+    async def taste(self, inter):
+        """Sends gracie's random rating for your choice."""
         gracie_taste = get_list("Gracie_Taste")
-        await ctx.respond(random.choice(gracie_taste))
+        await inter.response.send_message(random.choice(gracie_taste))
 
     @slash_command()
-    async def server(self, ctx):
-        await ctx.respond('https://discord.gg/gracieabrams')
+    async def server(self, inter):
+        """Sends 'Gracie Abrams' server link."""
+        await inter.response.send_message('https://discord.gg/gracieabrams')
 
     @slash_command()
-    async def wiki(self, ctx):
-        await ctx.respond('https://gracieabrams.fandom.com/wiki/')
-
-    @slash_command()
-    async def reddit(self, ctx):
-        await ctx.respond('https://www.reddit.com/r/gracie/')
-
+    async def social(self, inter):
+        """Sends gracie's social handles."""
+        embed = Embed()
+        embed.title = "Gracie's Social handles"
+        embed.color = disnake.Colour.dark_teal()
+        embed.set_thumbnail(url=random.choice(get_list("Gracie_Images")))
+        for media, link in social_links.items():
+            for index in range(-1,-len(link),-1):
+                if link[index] == "/":
+                    name = link[index+1:]
+                    break
+            embed.add_field(name=f"{media}", value=f"[{name}]({link})", inline=True)
+        await inter.response.send_message(embed=embed)
   # @slash_command(description="sends ping latency")
   # async def ping(self, ctx):
   #   await ctx.send(f'Pong! **{round(self.bot.latency*1000)}ms**')
