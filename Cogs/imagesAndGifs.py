@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import disnake
+from disnake.ext import commands
 
 from Utils.SomeFunctions import get_list
 import random
@@ -19,7 +19,7 @@ class ImagesCog(commands.Cog):
   async def img(self, ctx):
     with open("Assets/Gracie/Gracie_Images.txt",'r') as file:
       gracie_images = file.readlines()
-    embed = discord.Embed(color=0x2f3136)
+    embed = disnake.Embed(color=0x2f3136)
     embed.set_image(url=random.choice(gracie_images))
     await ctx.channel.send(embed=embed)
 
@@ -28,7 +28,7 @@ class ImagesCog(commands.Cog):
     """Sends a random gracie gif."""
     with open('Assets/Gracie/Gracie_Gifs.txt') as file:
       gracie_gifs = file.readlines()
-    embed = discord.Embed(color=0x2f3136)
+    embed = disnake.Embed(color=0x2f3136)
     embed.set_image(url=random.choice(gracie_gifs))
     await ctx.channel.send(embed=embed)
    

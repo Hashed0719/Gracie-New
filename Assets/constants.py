@@ -1,6 +1,6 @@
-import discord
+import disnake
 
-client_version = discord.__version__
+client_version = disnake.__version__
 guild_id = 917821802351308910
 
 class channel_id:

@@ -1,10 +1,10 @@
-import discord 
+import disnake 
 
-from discord import SelectOption
-from discord.ext import commands
+from disnake import SelectOption
+from disnake.ext import commands
 
 
-class cogs_select(discord.ui.Select):
+class cogs_select(disnake.ui.Select):
     def __init__(self, bot) -> None:
         self.bot = bot
 
@@ -23,7 +23,7 @@ class cogs_select(discord.ui.Select):
         self.bot.reload_extension(selected)
         await interaction.response.send_message(f"restarted **{self.values[0]}**", delete_after = 10)
 
-class cogrestarter_view(discord.ui.View):   
+class cogrestarter_view(disnake.ui.View):   
     def __init__(self, bot):
         self.bot = bot
         super().__init__()

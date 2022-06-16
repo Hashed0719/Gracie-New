@@ -1,10 +1,10 @@
-import discord
+import disnake
 
 import random, datetime 
 
-from discord import Embed
-from discord.ext import commands
-from discord.commands.core import slash_command
+from disnake import Embed
+from disnake.ext import commands
+from disnake.commands.core import slash_command
 
 from Assets import constants
 
@@ -17,7 +17,7 @@ class slashcommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
   
-  # gracie = discord.SlashCommandGroup("gracie", "commands fetched from gracie assets", guild_ids = [constants.guild_id])
+  # gracie = disnake.SlashCommandGroup("gracie", "commands fetched from gracie assets", guild_ids = [constants.guild_id])
     guild_id = [constants.guild_id]
   
   # @slash_command(description="checks if slash command cog is working fine")
@@ -143,14 +143,14 @@ class slashcommands(commands.Cog):
     @slash_command()
     async def fact(self, ctx):
         gracie_fact = get_list("Gracie_Fact")
-        embed = discord.Embed(color=0x2f3136)
+        embed = disnake.Embed(color=0x2f3136)
         embed.set_image(url=random.choice(gracie_fact))
         await ctx.respond(embed=embed)
 
     @slash_command()
     async def cover(self, ctx):
         gracie_covers = get_list("Gracie_Covers")
-        embed = discord.Embed(color=0x2f3136)
+        embed = disnake.Embed(color=0x2f3136)
         embed.set_image(url=random.choice(gracie_covers))
         await ctx.respond(embed=embed)
 
@@ -185,7 +185,7 @@ class slashcommands(commands.Cog):
 # )
 #   async def suggest(self,inter, suggestion):
 #     channel = self.bot.get_channel(941856035461795872) # Change to the channel ID of where you want the suggestions to be posted
-#     embed = discord.Embed(title="New Suggestion",    description=suggestion, color=0xDE7368) 
+#     embed = disnake.Embed(title="New Suggestion",    description=suggestion, color=0xDE7368) 
 #     embed.set_author(name=f"{inter.author.name}#{inter.author.discriminator}", icon_url=inter.author.avatar.url)
 #     embed.timestamp = datetime.datetime.utcnow()
 #     embed.set_footer(text=f"ID: {inter.author.id}")
@@ -203,7 +203,7 @@ class slashcommands(commands.Cog):
 # )
 #   async def confess(self, inter, confession):
 #     await inter.send("your confession is posted!", ephemeral=True)
-#     embed = discord.Embed(title="Anonymous Confession", description=f'"{confession}"', color=0x2f3136) 
+#     embed = disnake.Embed(title="Anonymous Confession", description=f'"{confession}"', color=0x2f3136) 
 #     embed.timestamp = datetime.datetime.utcnow()
 #     embed.set_footer(text=f"If this confession is breaking the rules, please report to a staff member.")
 #     chn = self.bot.get_channel(944096558142586880)

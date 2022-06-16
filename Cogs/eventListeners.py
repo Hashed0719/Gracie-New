@@ -1,6 +1,6 @@
-from discord.ext import commands
-from discord.ext.commands import Cog
-from discord import Embed
+from disnake.ext import commands
+from disnake.ext.commands import Cog
+from disnake import Embed
 
 class extra_commands(commands.Cog):
   def __init__(self, bot):

@@ -1,7 +1,7 @@
 import random, datetime
 
-from discord import Embed, Colour
-from discord.ext import commands
+from disnake import Embed, Colour
+from disnake.ext import commands
 
 from Utils.SomeFunctions import get_list
 

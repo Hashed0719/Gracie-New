@@ -1,17 +1,17 @@
-import discord 
+import disnake 
 
 import datetime
 
-from discord.commands import core 
-from discord.ext import commands
-from discord import InputTextStyle, ui
+from disnake.commands import core 
+from disnake.ext import commands
+from disnake import InputTextStyle, ui
 
 from Assets import constants
 
 
 
 class confess_modal(ui.Modal):
-    def __init__(self, bot: discord.Bot):
+    def __init__(self, bot: disnake.Bot):
         super().__init__(title="Confess")
         self.bot = bot
 
@@ -32,7 +32,7 @@ class confess_modal(ui.Modal):
             )
         )
 
-    async def callback(self, interaction :discord.Interaction):
+    async def callback(self, interaction :disnake.Interaction):
         author = interaction.user
         with open("Assets/Bans/confessban.txt") as file:
             list = file.readlines()
@@ -54,7 +54,7 @@ class confess_modal(ui.Modal):
         confession_description = self.children[1].value
 
     #sending confession in confess channel
-        embed = discord.Embed(
+        embed = disnake.Embed(
             title=embed_title,
             description=f'"{confession_description.strip()}"', 
             color=0x2f3136,
@@ -69,7 +69,7 @@ class confess_modal(ui.Modal):
         await confess.send(embed=embed)
 
         #Logging for moderation, in audit channel.
-        embed = discord.Embed(
+        embed = disnake.Embed(
         description=f"id `{interaction.user.id}` used command `confess`",
         timestamp=datetime.datetime.utcnow()
         )
@@ -94,12 +94,12 @@ class special_commands(commands.Cog):
         """Say something anonymously in <#944096558142586880>"""
         await ctx.message.delete()
 
-        class MyView(discord.ui.View):
+        class MyView(disnake.ui.View):
             def __init__(self, *items, timeout = 180, modal):
                 super().__init__()
                 self.modal = modal
 
-            @discord.ui.button(label="confess", style=discord.ButtonStyle.primary)
+            @disnake.ui.button(label="confess", style=disnake.ButtonStyle.primary)
             async def button_callback(self, button, interaction):
                 await interaction.response.send_modal(self.modal)
                 
@@ -111,7 +111,7 @@ class special_commands(commands.Cog):
 
     @core.slash_command(name="confess")
     @commands.cooldown(1, 30, commands.BucketType.user)
-    async def confess_slash(self, ctx :discord.ApplicationContext):
+    async def confess_slash(self, ctx :disnake.ApplicationContext):
         """Confess to your heart's content '-'"""
         modal = confess_modal(self.bot)
         await ctx.send_modal(modal)

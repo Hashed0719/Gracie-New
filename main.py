@@ -1,6 +1,6 @@
-import discord
-from discord.ext import commands
-from discord import __version__
+import disnake
+from disnake.ext import commands
+from disnake import __version__
 print(__version__)
 
 from keep_alive import keep_alive
@@ -11,12 +11,18 @@ from Assets import constants
 
 import os
 
-import logging 
+import logging as log
 
+log.basicConfig(
+    filemode="w",
+    filename="bot.log",
+    format="%(asctime)s - %(filename)s - %(levelname)s - %(message)s",
+    level=log.INFO
+)
 
 BOT_PREFIX = ";"
 
-def _get_prefix(bot: commands.Bot, message: discord.Message):
+def _get_prefix(bot: commands.Bot, message: disnake.Message):
     first_content = message.content.split()[0]
     commands_invoked = [
         command for command in bot.commands 
@@ -32,11 +38,11 @@ def _get_prefix(bot: commands.Bot, message: discord.Message):
 
 bot = commands.Bot(
     command_prefix=_get_prefix,
-    activity=discord.Activity(
-        type=discord.ActivityType.watching,
+    activity=disnake.Activity(
+        type=disnake.ActivityType.watching,
         name="you half-drunk happy"
     ),
-    intents=discord.Intents.all(),
+    intents=disnake.Intents.all(),
     debug_guilds = [constants.guild_id]
 )
     
@@ -45,7 +51,7 @@ async def on_ready():
     print(f"Succesfully connected as {bot.user}")
 
 @bot.event
-async def on_message(msg: discord.Message):
+async def on_message(msg: disnake.Message):
     if f"<@{bot.user.id}>" in msg.content:
         await msg.reply(f"Hello there! My prefix is `{BOT_PREFIX}`")
     else:
@@ -55,10 +61,11 @@ extensions = [
     "Cogs._initManager",
     "Cogs.eventListeners",
     "Cogs.helpCommand",
-    "Cogs.imagesAndGifs",
-    "Cogs.slashCommands",
-    "Cogs.gracieCommands",
-    "Cogs.specificCommands"
+    # "Cogs.imagesAndGifs",
+    # "Cogs.slashCommands",
+    # "Cogs.gracieCommands",
+    # "Cogs.specificCommands"
+    "Cogs.test"
 ]
 
 [bot.load_extension(ext) for ext in extensions]

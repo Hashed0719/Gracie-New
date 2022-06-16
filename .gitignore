@@ -11,3 +11,7 @@ pyproject.toml
 
 # replit
 .upm/
+
+#others
+test.py
+bot.log
