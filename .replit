@@ -1,2 +1,2 @@
 language = "python3"
-run = "pip install discord\n pip install py-cord==2.0.0b7\n pip install python-dotenv\n pip install git+https://github.com/zeph-yrus9/DisnakeWavelink.py.git"
+run = "pip install discord\n pip install py-cord==2.0.0b7\n pip install python-dotenv\n pip install git+https://github.com/zeph-yrus9/DisnakeWavelink.py.git\n python3 main.py"
