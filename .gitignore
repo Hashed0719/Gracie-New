@@ -10,5 +10,4 @@ venv/
 pyproject.toml
 
 # replit
-.replit
 .upm/
