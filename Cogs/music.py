@@ -35,6 +35,7 @@ class music_cog(commands.Cog):
         self.node = None  #assigned on wavelink.node.ready
         self.player = None  #assigned on wavelink.node.ready
         self.is_247 = False
+        self.prefix = "m."
 
     async def connect_nodes(self):
         """Connect to our Lavalink nodes."""
