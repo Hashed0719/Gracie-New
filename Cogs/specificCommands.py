@@ -103,7 +103,7 @@ class special_commands(commands.Cog):
                 
         modal = confess_modal(self.bot)
         view = MyView(modal=modal)
-        await ctx.send(".", view=view)
+        await ctx.send("Click the button below!", view=view)
 
     @commands.Cog.listener()
     async def on_modal_submit(self, inter: disnake.ModalInteraction):
