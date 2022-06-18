@@ -1,4 +1,4 @@
-import random, datetime
+import random, datetime, logging as log
 
 from disnake import Embed, Colour
 from disnake.ext import commands
@@ -15,7 +15,7 @@ social_links
 )
 
 
-class graciecommands(commands.Cog):
+class GracieCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
   
@@ -189,5 +189,5 @@ class graciecommands(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(graciecommands(bot))
-    print(f"loaded {graciecommands.__name__}")
+    bot.add_cog(GracieCommands(bot))
+    log.info(f"loaded {GracieCommands.__name__}")

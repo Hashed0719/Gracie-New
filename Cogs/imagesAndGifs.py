@@ -1,8 +1,11 @@
 import disnake
 from disnake.ext import commands
 
-from Utils.SomeFunctions import get_list
 import random
+
+import logging as log
+
+from Utils.SomeFunctions import get_list
 
 
 class ImagesCog(commands.Cog):
@@ -42,4 +45,4 @@ class ImagesCog(commands.Cog):
 
 def setup(bot):
     bot.add_cog(ImagesCog(bot))
-    print(f"loaded {ImagesCog.__name__}")
+    log.info(f"loaded {ImagesCog.__name__}")

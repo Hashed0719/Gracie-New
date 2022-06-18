@@ -2,7 +2,9 @@ from disnake.ext import commands
 from disnake.ext.commands import Cog
 from disnake import Embed
 
-class extra_commands(commands.Cog):
+import logging as log 
+
+class ExtraCommands(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
@@ -44,5 +46,5 @@ class extra_commands(commands.Cog):
         await message.reply('you hate to see me like that')
 
 def setup(bot):
-  bot.add_cog(extra_commands(bot))
-  print(f"loaded {extra_commands.__name__}")
+  bot.add_cog(ExtraCommands(bot))
+  log.info(f"loaded {ExtraCommands.__name__}")

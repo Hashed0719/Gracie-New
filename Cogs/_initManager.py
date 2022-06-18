@@ -1,10 +1,12 @@
 import disnake 
 
+import logging as log 
+
 from disnake import SelectOption
 from disnake.ext import commands
 
 
-class cogs_select(disnake.ui.Select):
+class CogsSelect(disnake.ui.Select):
     def __init__(self, bot) -> None:
         self.bot = bot
 
@@ -23,20 +25,20 @@ class cogs_select(disnake.ui.Select):
         self.bot.reload_extension(selected)
         await interaction.response.send_message(f"restarted **{self.values[0]}**", delete_after = 10)
 
-class cogrestarter_view(disnake.ui.View):   
+class CogRestarterView(disnake.ui.View):   
     def __init__(self, bot):
         self.bot = bot
         super().__init__()
 
-        self.add_item(cogs_select(self.bot))    
+        self.add_item(CogsSelect(self.bot))    
 
-class manager(commands.Cog):
+class Manager(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
     @commands.command(name="manager", aliases = ["manage", "mng"], hidden = True)
     async def manager(self, ctx):
-        view = cogrestarter_view(self.bot)
+        view = CogRestarterView(self.bot)
         await ctx.message.delete()
         await ctx.send("Cogs Restarter", view=view, delete_after = 180)
 
@@ -47,5 +49,5 @@ class manager(commands.Cog):
         await message.delete()
         
 def setup(bot):
-    bot.add_cog(manager(bot))
-    print(f"loaded {manager.__name__}")
+    bot.add_cog(Manager(bot))
+    log.info(f"loaded {Manager.__name__}")

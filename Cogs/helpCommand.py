@@ -5,6 +5,23 @@ from disnake.ext import commands
 from typing import Optional
 import logging as log
 
+from Assets import constants
+
+
+class LeftMostButton(disnake.ui.Button):
+    def __init__(self, *, paginator):
+        self.paginator = paginator
+        super().__init__(
+            disabled=(True if paginator.on_page==1 else False),
+            label="<<",
+            style=ButtonStyle.blurple 
+        )
+
+    async def callback(self, interaction: MessageInteraction, /):
+        await self.paginator.to_first()
+        await interaction.response.defer()
+        
+        
 class LeftButton(disnake.ui.Button):
     def __init__(self,*, paginator) -> None:
         self.paginator = paginator
@@ -41,12 +58,27 @@ class RightButton(disnake.ui.Button):
         await self.paginator.next_embed()
         await interaction.response.defer()   
 
+class RightMostButton(disnake.ui.Button):
+    def __init__(self, *, paginator):
+        self.paginator = paginator
+        super().__init__(
+            disabled=(True if paginator.on_page == paginator.total_embeds else False),
+            label=">>",
+            style=ButtonStyle.blurple 
+        )
+
+    async def callback(self, interaction: MessageInteraction, /):
+        await self.paginator.to_last()
+        await interaction.response.defer()
+
 class paginator_view(disnake.ui.View):
     def __init__(self, *,paginator , timeout: Optional[float] = 180):
         super().__init__(timeout=timeout)
+        self.add_item(LeftMostButton(paginator=paginator))
         self.add_item(LeftButton(paginator=paginator))
         self.add_item(MiddleButton(paginator=paginator))
         self.add_item(RightButton(paginator=paginator))
+        self.add_item(RightMostButton(paginator=paginator))
 
 class MyPaginator():
     def __init__(self, embeds: list[disnake.Embed]) -> None:
@@ -54,6 +86,25 @@ class MyPaginator():
         self.total_embeds = len(embeds)
         self.on_page = 1
         self.message: disnake.Message= None
+
+    async def to_first(self):
+        """Edits the message to first page."""
+        msg = self.message
+        if self.on_page == 1:
+            return 
+        else:
+            self.on_page = 1
+            view = paginator_view(paginator=self)
+            await msg.edit(embed=self.embeds[self.on_page], view=view)
+
+    async def to_last(self):
+        msg = self.message
+        if self.on_page == self.total_embeds:
+            return 
+        else:
+            self.on_page = self.total_embeds
+            view = paginator_view(paginator=self)
+            await msg.edit(embed=self.embeds[self.on_page], view=view)
 
     async def prev_embed(self):
         msg = self.message
@@ -97,9 +148,10 @@ class customhelpcommand(commands.HelpCommand):
         """
         help_embeds = []
         embed = disnake.Embed(title="Help")
-        for no, command in enumerate(cmdlist,start=1):  
+        for no, command in enumerate(cmdlist,start=1):
+            command: commands.Command
             embed.add_field(
-                name=f"{command.name}",
+                name=f"{command.usename}",
                 value=f"*{command.help}*",
                 inline=False
             )
@@ -113,8 +165,14 @@ class customhelpcommand(commands.HelpCommand):
     def get_public_commands(self):
         """Returns list of  text commands which are not hidden."""
         bot :commands.Bot = self.context.bot
-        textcommands = [command for command in bot.commands if not isinstance(command, SlashCommand)]
-        public_commands = [command for command in textcommands if not command.hidden]
+        public_commands = []
+        for cog in bot.cogs.values():
+            for cog_command in cog.get_commands():
+                if hasattr(cog, "prefix"):
+                    cog_command.usename = f"{cog.prefix}{cog_command.name}"
+                else:
+                    cog_command.usename = f"{constants.BOT_PREFIX}{cog_command.name}"
+                public_commands.append(cog_command)
         return public_commands
 
     async def send_bot_help(self, mapping :dict):
@@ -123,7 +181,7 @@ class customhelpcommand(commands.HelpCommand):
         commands = await self.filter_commands(
             commands=commands, 
             sort=True, 
-            key=lambda a: a.name
+            key=lambda a: a.usename
         )
 
         help_embeds = self.make_embeds(commands)
@@ -136,7 +194,7 @@ class customhelpcommand(commands.HelpCommand):
         return await super().send_bot_help(mapping)
 
 
-class help(commands.Cog):
+class Help(commands.Cog):
     def __init__(self, bot :commands.Bot) -> None:
         self.bot = bot 
         self.oldhelpcommand = self.bot.help_command
@@ -147,13 +205,6 @@ class help(commands.Cog):
         self.bot.help_command = self.oldhelpcommand
 
 
-    @commands.command(name="m.help")
-    async def music_help(self, ctx):
-        """
-        Help command for music playback.
-        MUST BE USED WITHOUT PREFIX
-        """
-        return
-        
 def setup(bot):
-    bot.add_cog(help(bot))
+    bot.add_cog(Help(bot))
+    log.info(f"loaded {Help.__name__}")
