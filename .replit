@@ -1,2 +1,2 @@
 language = "python3"
-run = "pip install disnake\n pip install python-dotenv\n pip install git+https://github.com/zeph-yrus9/DisnakeWavelink.py.git\n python3 main.py"
+run = "(python3.10 --version || install-pkg python3.10) && clear && pip install disnake\n pip install python-dotenv\n pip install git+https://github.com/zeph-yrus9/DisnakeWavelink.py.git && clear && python3.10 main.py"
