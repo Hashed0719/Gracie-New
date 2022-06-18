@@ -21,7 +21,10 @@ log.basicConfig(
 )
 
 def _get_prefix(bot: commands.Bot, message: disnake.Message):
-    first_content = message.content.split()[0]
+    try:
+        first_content = message.content.split()[0]
+    except IndexError:
+        return 
     commands_invoked = [
         command for command in bot.commands 
         if command.name.lower() in first_content.lower()
