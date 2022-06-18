@@ -16,7 +16,7 @@ from Utils.SomeFunctions import get_list
 import logging as log
 
 
-class slashcommands(commands.Cog):
+class MySlashCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
   
@@ -237,6 +237,6 @@ class slashcommands(commands.Cog):
 
     
 def setup(bot):
-    bot.add_cog(slashcommands(bot))
-    print(f"loaded {slashcommands.__name__}")
+    bot.add_cog(MySlashCommands(bot))
+    log.info(f"loaded {MySlashCommands.__name__}")
     

@@ -136,7 +136,7 @@ class customhelpcommand(commands.HelpCommand):
         return await super().send_bot_help(mapping)
 
 
-class help(commands.Cog):
+class Help(commands.Cog):
     def __init__(self, bot :commands.Bot) -> None:
         self.bot = bot 
         self.oldhelpcommand = self.bot.help_command
@@ -156,4 +156,5 @@ class help(commands.Cog):
         return
         
 def setup(bot):
-    bot.add_cog(help(bot))
+    bot.add_cog(Help(bot))
+    log.info(f"loaded {Help.__name__}")

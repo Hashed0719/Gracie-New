@@ -63,6 +63,7 @@ extensions = [
     "Cogs.helpCommand",
     "Cogs.imagesAndGifs",
     "Cogs.slashCommands",
+    "Cogs.music",
     "Cogs.gracieCommands",
     "Cogs.specificCommands"
 ]

@@ -2,6 +2,8 @@ import disnake
 
 import datetime
 
+import logging as log
+
 from disnake.ext.commands import slash_command
 from disnake.ext import commands
 from disnake import TextInputStyle, ui
@@ -10,7 +12,8 @@ from Assets import constants
 
 
 
-class confess_modal(ui.Modal):
+
+class ConfessModal(ui.Modal):
     def __init__(self, bot: commands.Bot):
         super().__init__(
             title = "Confess",
@@ -82,7 +85,7 @@ class confess_modal(ui.Modal):
        
 
 
-class special_commands(commands.Cog):
+class SpecialCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         
@@ -101,7 +104,7 @@ class special_commands(commands.Cog):
             async def button_callback(self, button, interaction):
                 await interaction.response.send_modal(self.modal)
                 
-        modal = confess_modal(self.bot)
+        modal = ConfessModal(self.bot)
         view = MyView(modal=modal)
         await ctx.send(".", view=view)
 
@@ -114,7 +117,7 @@ class special_commands(commands.Cog):
     @commands.cooldown(1, 30, commands.BucketType.user)
     async def confess_slash(self, inter):
         """Confess to your heart's content '-'"""
-        modal = confess_modal(self.bot)
+        modal = ConfessModal(self.bot)
         await inter.response.send_modal(modal)
     
     @confess.error
@@ -126,7 +129,7 @@ class special_commands(commands.Cog):
         await ctx.respond(str(error))  
 
 def setup(bot):
-    bot.add_cog(special_commands(bot))
-    print(f"loaded {special_commands.__name__}")
+    bot.add_cog(SpecialCommands(bot))
+    log.info(f"loaded {SpecialCommands.__name__}")
 
 
