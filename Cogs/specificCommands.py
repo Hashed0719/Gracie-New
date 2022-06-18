@@ -121,12 +121,14 @@ class SpecialCommands(commands.Cog):
         await inter.response.send_modal(modal)
     
     @confess.error
-    async def local_handler(self, ctx, error):
-        await ctx.send(str(error))  
+    async def local_handler(self, ctx: commands.Context, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            await ctx.send(str(error), delete_after=3)  
 
     @confess_slash.error
-    async def local_handler(self, ctx, error):
-        await ctx.respond(str(error))  
+    async def local_handler(self, inter: disnake.interactions.ApplicationCommandInteraction, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            await inter.response.send_message(str(error), ephemeral=True)  
 
 def setup(bot):
     bot.add_cog(SpecialCommands(bot))
