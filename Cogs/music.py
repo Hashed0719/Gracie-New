@@ -1,6 +1,6 @@
 from tarfile import GNUTYPE_LONGLINK
-import discord
-from discord.ext import commands
+import disnake
+from disnake.ext import commands
 
 import wavelink
 from wavelink import YouTubePlaylist, QueueEmpty, LoadTrackError
@@ -53,7 +53,7 @@ class music_cog(commands.Cog):
     
     async def ensure_voice(self, channel = None) -> GPlayer:
         if not self.bot.voice_clients:
-            channel: discord.VoiceChannel = await self.bot.fetch_channel(constants.ids.voice_channel_247)
+            channel: disnake.VoiceChannel = await self.bot.fetch_channel(constants.ids.voice_channel_247)
             player: GPlayer= await channel.connect(cls=GPlayer)
         else:
             player: GPlayer= self.bot.voice_clients[0]
@@ -74,7 +74,7 @@ class music_cog(commands.Cog):
             await player.disconnect(force=True)
         #starting 247
 
-        v_channel: discord.VoiceChannel = await self.bot.fetch_channel(constants.ids.voice_channel_247)
+        v_channel: disnake.VoiceChannel = await self.bot.fetch_channel(constants.ids.voice_channel_247)
         player: GPlayer= await v_channel.connect(cls=GPlayer)
         
         channel = await self.bot.fetch_channel(constants.ids.vc_text)
@@ -86,9 +86,9 @@ class music_cog(commands.Cog):
     @commands.Cog.listener()
     async def on_wavelink_track_start(self, player :GPlayer, track :wavelink.Track):
         log.info("invoked - wavelink - track start event listener")
-        channel :discord.TextChannel= player.text_channel
+        channel :disnake.TextChannel= player.text_channel
         if hasattr(player, "play_message"):
-            message :discord.Message = player.play_message
+            message :disnake.Message = player.play_message
             await message.edit(view=None)
         embed, view = mcembeds.play(player, track)
         player.play_message = await channel.send(embed=embed, view=view)
