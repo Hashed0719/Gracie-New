@@ -20,8 +20,6 @@ log.basicConfig(
     level=log.INFO
 )
 
-BOT_PREFIX = ";"
-
 def _get_prefix(bot: commands.Bot, message: disnake.Message):
     first_content = message.content.split()[0]
     commands_invoked = [
@@ -34,7 +32,7 @@ def _get_prefix(bot: commands.Bot, message: disnake.Message):
             if command.cog.prefix + command.name.lower() == first_content.lower():
                 return command.cog.prefix 
         else:
-            return BOT_PREFIX
+            return constants.BOT_PREFIX
 
 bot = commands.Bot(
     command_prefix=_get_prefix,
@@ -53,7 +51,7 @@ async def on_ready():
 @bot.event
 async def on_message(msg: disnake.Message):
     if f"<@{bot.user.id}>" in msg.content:
-        await msg.reply(f"Hello there! My prefix is `{BOT_PREFIX}`")
+        await msg.reply(f"Hello there! My prefix is `{constants.BOT_PREFIX}`")
     else:
         await bot.process_commands(msg)
 

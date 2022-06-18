@@ -1,11 +1,11 @@
-import discord
-from discord import Embed, Emoji, ButtonStyle, Interaction
-from discord.ext import commands
-from discord.ui import View, Item, Button, button, select
+import disnake
+from disnake import Embed, Emoji, ButtonStyle, Interaction
+from disnake.ext import commands
+from disnake.ui import View, Item, Button, button, select
 
 import wavelink
 
-from gplayer import GPlayer
+from Utils.gplayer import GPlayer
 
 import logging as log
 import time
@@ -29,13 +29,13 @@ class ControlView(View):
 class MusicControlEmbeds:
     """A class containing all the functions to create embeds for music playback."""
 
-    def play(player :GPlayer, track :wavelink.Track) -> typing.Tuple[discord.Embed, discord.ui.View]:
+    def play(player :GPlayer, track :wavelink.Track) -> typing.Tuple[disnake.Embed, disnake.ui.View]:
         """Returns embed, view for track start"""
         length = time.strftime("%M:%S", time.gmtime(track.length))
-        embed = discord.Embed(
+        embed = disnake.Embed(
             # title=f"Now Playing...",
             description=f"[{track.title}]\n| {length}",
-            color=discord.Colour.green()   
+            color=disnake.Colour.green()   
         )
         embed.set_author(name="Now Playing")
 
@@ -47,10 +47,10 @@ class MusicControlEmbeds:
         
         return embed, view
 
-    def skip(player, track) -> discord.Embed:
-        embed = discord.Embed(
+    def skip(player, track) -> disnake.Embed:
+        embed = disnake.Embed(
             description=f"[{track.title}]",
-            color=discord.Color.yellow()
+            color=disnake.Color.yellow()
         )
         embed.set_author(name="Skipped Song")
         

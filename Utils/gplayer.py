@@ -1,6 +1,6 @@
-import discord
-from discord import VoiceChannel, Guild
-from discord.ext import commands
+import disnake
+from disnake import VoiceChannel, Guild
+from disnake.ext import commands
 
 import wavelink
 from wavelink import Node, Queue, QueueEmpty
@@ -10,11 +10,11 @@ import logging as log
 
 import random
 
-import constants
+from Assets import constants
 
 
 class GPlayer(wavelink.Player):
-    def __init__(self, client: discord.Client = MISSING, channel: VoiceChannel = MISSING, *, node: Node = MISSING):
+    def __init__(self, client: disnake.Client = MISSING, channel: VoiceChannel = MISSING, *, node: Node = MISSING):
         super().__init__(client, channel, node=node)
         self.psource = None
         self.text_channel = None

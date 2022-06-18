@@ -1,10 +1,12 @@
 import disnake
 
+BOT_PREFIX = ";"
+
 client_version = disnake.__version__
 guild_id = 917821802351308910
 
 class channel_id:
-  audit = 919947326842347520
+  audit = 944094115543535726
   confess = 944096558142586880
   gracie_bot = 923716595740713010
   bot_status = 950181434017062942
@@ -32,4 +34,4 @@ PLAYLISTS = [
 class ids:
     guild_id = 917821802351308910
     voice_channel_247 = 975312904444313610
-    vc_text = 950164647607156746
+    vc_text = 981142869152776242

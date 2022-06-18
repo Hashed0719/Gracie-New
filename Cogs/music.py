@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import disnake
+from disnake.ext import commands
 
 import wavelink
 from wavelink import YouTubePlaylist, QueueEmpty, LoadTrackError
@@ -11,12 +11,10 @@ import lavalink_server
 from Utils.gplayer import GPlayer
 from Utils.membeds import MusicControlEmbeds as mcembeds
 
-
-import sys 
-sys.path.insert(0, "C:\Other thingy\pirogram\\New\Gracie New\Assets")
-from constants import ids, PLAYLISTS
+from Assets.constants import ids, PLAYLISTS
 
 BOT_247_STATE = None       #Whether the bot is in 24/7 song playing mode.
+MUSIC_COG_PREFIX = "m."
 
 class MusicCog(commands.Cog):
     """Music cog to hold Wavelink related commands and listeners."""
@@ -28,6 +26,7 @@ class MusicCog(commands.Cog):
         self.node = None  #assigned on wavelink.node.ready
         self.player = None  #assigned on wavelink.node.ready
         self.is_247 = False
+        self.prefix = MUSIC_COG_PREFIX
 
     async def connect_nodes(self):
         """Connect to our Lavalink nodes."""
@@ -47,7 +46,7 @@ class MusicCog(commands.Cog):
     
     async def ensure_voice(self, channel = None) -> GPlayer:
         if not self.bot.voice_clients:
-            channel: discord.VoiceChannel = await self.bot.fetch_channel(ids.voice_channel_247)
+            channel: disnake.VoiceChannel = await self.bot.fetch_channel(ids.voice_channel_247)
             player: GPlayer= await channel.connect(cls=GPlayer)
         else:
             player: GPlayer= self.bot.voice_clients[0]
@@ -76,9 +75,9 @@ class MusicCog(commands.Cog):
     @commands.Cog.listener()
     async def on_wavelink_track_start(self, player :GPlayer, track :wavelink.Track):
         log.info("invoked - wavelink - track start event listener")
-        channel :discord.TextChannel= player.text_channel
+        channel :disnake.TextChannel= player.text_channel
         if hasattr(player, "play_message"):
-            message :discord.Message = player.play_message
+            message :disnake.Message = player.play_message
             await message.edit(view=None)
         embed, view = mcembeds.play(player, track)
         player.play_message = await channel.send(embed=embed, view=view)
