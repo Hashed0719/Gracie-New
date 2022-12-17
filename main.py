@@ -43,8 +43,8 @@ bot = commands.Bot(
         type=disnake.ActivityType.watching,
         name="you half-drunk happy"
     ),
-    intents=disnake.Intents.all(),
-    debug_guilds = [constants.guild_id]
+    intents=disnake.Intents.all()
+    # debug_guilds = [constants.guild_id]
 )
     
 @bot.event

@@ -1,4 +1,3 @@
-from tarfile import GNUTYPE_LONGLINK
 import disnake
 from disnake.ext import commands
 
@@ -115,7 +114,7 @@ class music_cog(commands.Cog):
     @commands.command(aliases=["p"])
     async def play(self, ctx: commands.Context, *, track: wavelink.YouTubeTrack):
         """
-        Plays specified songs form youtube.
+        Plays specified songs from youtube.
         example:-`m.play gracie 21`
         """
         log.info("invoked - discord - play command")
