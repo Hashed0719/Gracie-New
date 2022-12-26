@@ -1,16 +1,13 @@
 import disnake 
+from disnake.ext.commands import slash_command
+from disnake.ext import commands
+from disnake import TextInputStyle, ui
 
 import datetime
 
 import logging as log
 
-from disnake.ext.commands import slash_command
-from disnake.ext import commands
-from disnake import TextInputStyle, ui
-
 from Assets import constants
-
-
 
 
 class ConfessModal(ui.Modal):
