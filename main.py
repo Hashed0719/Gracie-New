@@ -65,8 +65,7 @@ extensions = [
     "Cogs.imagesAndGifs",
     "Cogs.slashCommands",
     "Cogs.music",
-    "Cogs.gracieCommands",
-    "Cogs.specificCommands"
+    "Cogs.gracieCommands"
 ]
 
 [bot.load_extension(ext) for ext in extensions]
