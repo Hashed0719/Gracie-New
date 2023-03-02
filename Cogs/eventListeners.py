@@ -10,20 +10,20 @@ class ExtraCommands(commands.Cog):
 
   command = commands.command
 
-  @Cog.listener("on_message")
-  async def strawwberriess(self, message):
-    content = message.content.lower()
-    if message.author == self.bot.user:
-      return
-    if "berry" in content and "strawberry" not in content:
-      await message.add_reaction(
-        r":graciestrawberry:935526687351898232"
-      )
-    if "strawberry" in content:
-      if "big" in content:
-        await message.channel.send("https://cdn.discordapp.com/emojis/935526687351898232.webp?size=100&quality=lossless")
-        return
-      await message.channel.send ('<:graciestrawberry:935526687351898232>')
+  # @Cog.listener("on_message")
+  # async def strawwberriess(self, message):
+  #   content = message.content.lower()
+  #   if message.author == self.bot.user:
+  #     return
+  #   if "berry" in content and "strawberry" not in content:
+  #     await message.add_reaction(
+  #       r":graciestrawberry:935526687351898232"
+  #     )
+  #   if "strawberry" in content:
+  #     if "big" in content:
+  #       await message.channel.send("https://cdn.discordapp.com/emojis/935526687351898232.webp?size=100&quality=lossless")
+  #       return
+  #     await message.channel.send ('<:graciestrawberry:935526687351898232>')
   
   @Cog.listener("on_message")
   async def last_fm(self, message):
