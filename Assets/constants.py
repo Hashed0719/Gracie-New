@@ -5,11 +5,19 @@ BOT_PREFIX = ";"
 client_version = disnake.__version__
 guild_id = 917821802351308910
 
+class DataBase:
+  db_name = "Gracie.db"
+  table_name = "Trivia"
+
 class channel_id:
   audit = 944094115543535726
   confess = 944096558142586880
   gracie_bot = 923716595740713010
   bot_status = 950181434017062942
+
+class Roles:
+  Staff = 917833406795091968
+  Admins = 921088373911871499
 
 playlist = 'https://open.spotify.com/playlist/7Mven07omZONK1nS8o9oEo?si=3cba33f71db04ccc'
 intro_playlist = 'https://open.spotify.com/playlist/4Uigwu6pJOSuOLDE0jkFQf?si=008e260ad78d4583'

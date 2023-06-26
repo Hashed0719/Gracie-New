@@ -11,13 +11,13 @@ from Assets import constants
 
 import os
 
-import logging as log
+import logging as log   
 
 log.basicConfig(
     filemode="w",
     filename="bot.log",
-    format="%(asctime)s - %(filename)s - %(levelname)s - %(message)s",
-    level=log.INFO
+    format="%(asctime)s - %(filename)s - %(message)s - %(levelname)s ",
+    level=log.DEBUG
 )
 
 def _get_prefix(bot: commands.Bot, message: disnake.Message):
@@ -64,7 +64,8 @@ extensions = [
     "Cogs.helpCommand",
     "Cogs.imagesAndGifs",
     "Cogs.slashCommands",
-    "Cogs.gracieCommands"
+    "Cogs.gracieCommands",
+    "Cogs.trivia"
 ]
 
 [bot.load_extension(ext) for ext in extensions]
