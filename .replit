@@ -1,2 +1,19 @@
 language = "python3"
-run = "(python3.10 --version || install-pkg python3.10) && clear && pip install disnake\n pip install python-dotenv\n pip install git+https://github.com/zeph-yrus9/DisnakeWavelink.py.git && clear && python3.10 main.py"
+# run = """pip install disnake --user && pip install python-dotenv --user && pip install setuptools --user && pip install git+https://github.com/zeph-yrus9/DisnakeWavelink.py.git --user && clear && python3.10 main.py --user """
+run = """poetry run python main.py"""
+
+entrypoint = "main.sh"
+
+[languages]
+ 
+[languages.bash]
+pattern = "**/{*.sh,*.bash}"
+
+[languages.bash.languageServer]
+start = "bash-language-server start"
+
+[nix]
+channel = "stable-22_11"
+
+[deployment]
+run = ["sh", "-c", "bash main.sh"]
