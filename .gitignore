@@ -6,9 +6,6 @@ venv/
 
 .breakpoints
 
-#poetry
-pyproject.toml
-
 # replit
 .upm/
 
